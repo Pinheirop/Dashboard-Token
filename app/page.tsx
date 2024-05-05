@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import LoginScreen from "@/components/login";
-import  Dashboard  from "@/components/main_dash";
+import Dashboard from "@/components/main_dash";
 
 export default function Home() {
-  
-  const isLoggedIn = localStorage.getItem('isLogged');
-  return(isLoggedIn === 'true' ?  <Dashboard /> : <LoginScreen />);
+  const isLoggedIn =
+    typeof window !== "undefined" ? localStorage.getItem("isLogged") : null;
+  return isLoggedIn === "true" ? <Dashboard /> : <LoginScreen />;
 }
