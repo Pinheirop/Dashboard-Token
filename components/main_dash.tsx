@@ -23,7 +23,7 @@ function Dashboard() {
   const [thisMonthCommissions, setThisMonthCommissions] = useState(0);
   const [customDateComissions, setCustomDateComissions] = useState(0);
   const [isCheckedClicked, setIsCheckedClicked] = useState(false);
-  const isMobile = window.innerWidth <= 600;
+  const isMobile = window.innerWidth <= 780;
 
   useEffect(() => {
     authorizeAPI().then(async () => {
@@ -79,7 +79,13 @@ function Dashboard() {
                 </div>
                 <div className="flex gap-4 items-center">
                   <ModeToggle />
-                  <LogOut />
+                  <LogOut
+                    className="cursor-pointer"
+                    onClick={() => {
+                      window.localStorage.clear();
+                      location.reload();
+                    }}
+                  />
                 </div>
               </div>
             ) : (
