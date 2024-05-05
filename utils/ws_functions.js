@@ -6,9 +6,9 @@ const connection = new WebSocket(
   "wss://ws.derivws.com/websockets/v3?app_id=1089"
 );
 const api = new DerivAPI({ connection });
-const token = localStorage.getItem("user_token");
 
-// 2xiEsg3hbi0mg0c
+const token =
+  typeof localStorage !== "undefined" ? localStorage.getItem("user_token") : "";
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
@@ -27,8 +27,8 @@ export const authorizeAPI = async () => {
 export const loginUser = async (token) => {
   try {
     await api.account(token.trim());
-    localStorage.setItem("isLogged",'true');
-    localStorage.setItem("user_token",token.trim());
+    localStorage.setItem("isLogged", "true");
+    localStorage.setItem("user_token", token.trim());
     location.reload();
   } catch (error) {
     console.log("An error occured while logging in", error);
