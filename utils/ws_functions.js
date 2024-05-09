@@ -51,8 +51,16 @@ export const getPreviousMonthCommission = async () => {
       date_from: dateFrom,
       date_to: dateTo,
     });
+    const toBepaid = markup.app_markup_statistics.total_app_markup_usd;
+    const dateFrom1 = `${currentYear}-${lastMonth + 1}-01 00:00:00`;
+    const dateTo1 = `${currentYear}-${lastMonth + 1}-${getLastDateOfMonth(
+      currentYear,
+      lastMonth
+    )} 23:59:59`;
 
-    return markup.app_markup_statistics.total_app_markup_usd;
+    const isPaid = await checkPaid(dateFrom1, dateTo1, toBepaid);
+
+    return { toBepaid, isPaid };
   } catch (error) {
     console.log(error);
   }
@@ -165,3 +173,52 @@ export const customDateCommissionCheck = async () => {
     console.log(error);
   }
 };
+
+const checkPaid = async (dateFrom, dateTo, toBepaid) => {
+  const from = convertToEpoch(dateFrom);
+  const toDate = convertToEpoch(dateTo);
+  let isPaid = "";
+  const statements = await api.basic.statement({
+    action_type: "deposit",
+    description: 1,
+    date_from: from,
+    date_to: toDate,
+  });
+  statements.statement.transactions.forEach((statement) => {
+    if (toBepaid === statement.amount) {
+      if (statement.longcode.includes("Payment for arbitrary")) {
+        isPaid = "paid";
+        return;
+      } else if (statement.longcode.includes("arbitrary")) {
+        isPaid = "paid";
+        return;
+      }
+    }
+  });
+
+  if (isPaid === "") {
+    isPaid = "pending";
+  }
+
+  return isPaid;
+};
+
+function convertToEpoch(dateString) {
+  // Split the date string into date and time parts
+  const [datePart, timePart] = dateString.split(" ");
+
+  // Split the date part into year, month, and day
+  const [year, month, day] = datePart.split("-").map(Number);
+
+  // Split the time part into hours, minutes, and seconds
+  const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+  // Create a new Date object with the given date and time
+  const dateObj = new Date(year, month - 1, day, hours, minutes, seconds);
+
+  // Get the Unix timestamp (in milliseconds) from the Date object
+  const timestamp = dateObj.getTime();
+
+  // Convert milliseconds to seconds and return
+  return Math.floor(timestamp / 1000);
+}

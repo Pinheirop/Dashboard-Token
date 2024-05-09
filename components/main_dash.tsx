@@ -18,7 +18,10 @@ import { ModeToggle } from "./mode_toggle";
 import { LogOut } from "lucide-react";
 
 function Dashboard() {
-  const [previousMonthCommission, setPreviousMonthCommissiont] = useState(0);
+  const [previousMonthCommission, setPreviousMonthCommissiont] = useState({
+    amount: 0,
+    payment_status: "pending",
+  });
   const [todaysCommission, setTodaysCommission] = useState(0);
   const [thisMonthCommissions, setThisMonthCommissions] = useState(0);
   const [customDateComissions, setCustomDateComissions] = useState(0);
@@ -29,10 +32,18 @@ function Dashboard() {
     authorizeAPI().then(async () => {
       getPreviousMonthCommission().then((commission) => {
         if (typeof commission === "undefined") {
-          setPreviousMonthCommissiont(-1);
+          setPreviousMonthCommissiont({
+            amount: -1,
+            payment_status: "pending",
+          });
           return;
         }
-        setPreviousMonthCommissiont(commission);
+
+        const { toBepaid, isPaid } = commission;
+        setPreviousMonthCommissiont({
+          amount: toBepaid,
+          payment_status: isPaid,
+        });
       });
       getTodaysCommission().then((commission) => {
         if (typeof commission === "undefined") {
@@ -203,14 +214,30 @@ function Dashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {previousMonthCommission === 0 ? (
+                      {previousMonthCommission.amount === 0 ? (
                         <Skeleton className="h-[30px] w-[150px] rounded-[4px]" />
-                      ) : previousMonthCommission === -1 ? (
+                      ) : previousMonthCommission.amount === -1 ? (
                         "0"
                       ) : (
-                        `$ ${previousMonthCommission.toFixed(2)}`
+                        `$ ${previousMonthCommission.amount.toFixed(2)}`
                       )}
                     </div>
+
+                    {previousMonthCommission.amount === 0 ? (
+                      <Skeleton className="h-[30px] w-[150px] rounded-[4px]" />
+                    ) : previousMonthCommission.amount === -1 ? (
+                      <h5 className="text-sm bg-red-500 w-[24%] rounded p-[3px] my-1">
+                        no pending payout
+                      </h5>
+                    ) : previousMonthCommission.payment_status === "paid" ? (
+                      <h5 className="text-sm bg-primary w-[24%] rounded p-[3px] my-1">
+                        Commission Paid
+                      </h5>
+                    ) : (
+                      <h5 className="text-sm bg-blue-400 w-[24%] rounded p-[3px] my-1">
+                        Payout Pending
+                      </h5>
+                    )}
                   </CardContent>
                 </Card>
                 <div className={`${isCheckedClicked ? "block" : "hidden"}`}>
