@@ -230,11 +230,19 @@ function Dashboard() {
                         no pending payout
                       </h5>
                     ) : previousMonthCommission.payment_status === "paid" ? (
-                      <h5 className="text-sm bg-primary w-[24%] rounded p-[3px] my-1">
+                      <h5
+                        className={`text-sm bg-primary ${
+                          isMobile ? "w-[40%]" : "w-[24%]"
+                        } rounded p-[3px] my-1`}
+                      >
                         Commission Paid
                       </h5>
                     ) : (
-                      <h5 className="text-sm bg-blue-400 w-[24%] rounded p-[3px] my-1">
+                      <h5
+                        className={`text-sm bg-blue-400 ${
+                          isMobile ? "w-[40%]" : "w-[24%]"
+                        } rounded p-[3px] my-1`}
+                      >
                         Payout Pending
                       </h5>
                     )}
