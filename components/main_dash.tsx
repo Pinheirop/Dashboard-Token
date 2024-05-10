@@ -240,7 +240,7 @@ function Dashboard() {
                     ) : (
                       <h5
                         className={`text-sm bg-blue-400 ${
-                          isMobile ? "w-[40%]" : "w-[24%]"
+                          isMobile ? "w-[60%]" : "w-[24%]"
                         } rounded p-[3px] my-1`}
                       >
                         Payout Pending
