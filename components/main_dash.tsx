@@ -192,7 +192,11 @@ function Dashboard() {
                       ) : todaysCommission === -1 ? (
                         "0"
                       ) : (
-                        `$ ${todaysCommission.toFixed(2)}`
+                        `$ ${
+                          typeof todaysCommission !== "undefined"
+                            ? todaysCommission.toFixed(2)
+                            : 0
+                        }`
                       )}
                     </div>
 
@@ -229,7 +233,11 @@ function Dashboard() {
                       ) : previousMonthCommission.amount === -1 ? (
                         "0"
                       ) : (
-                        `$ ${previousMonthCommission.amount.toFixed(2)}`
+                        `$ ${
+                          typeof previousMonthCommission.amount !== "undefined"
+                            ? previousMonthCommission.amount.toFixed(2)
+                            : 0
+                        }`
                       )}
                     </div>
 
@@ -242,7 +250,7 @@ function Dashboard() {
                     ) : previousMonthCommission.payment_status === "paid" ? (
                       <h5
                         className={`text-sm bg-primary ${
-                          isMobile ? "w-[40%]" : "w-[24%]"
+                          isMobile ? "w-[60%]" : "w-[24%]"
                         } rounded p-[3px] my-1`}
                       >
                         Commission Paid
