@@ -66,11 +66,34 @@ export const getPreviousMonthCommission = async () => {
   }
 };
 
+const getActiveTraders = async (dateFrom, dateTo) => {
+  const stats = await api.basic.appMarkupDetails({
+    date_from: dateFrom,
+    date_to: dateTo,
+    description: 1,
+  });
+
+  const user_ids = [];
+
+  stats.app_markup_details.transactions.forEach((data) => {
+    user_ids.push(data.client_loginid);
+  });
+
+  // Use a Set to store unique user IDs
+  const uniqueUserIds = new Set(user_ids);
+  // Convert the Set back to an array if needed
+  const uniqueUserIdsArray = Array.from(uniqueUserIds);
+
+  return uniqueUserIdsArray.length;
+};
+
 export const getTodaysCommission = async () => {
   const dateFrom = `${currentYear}-${currentMonth + 1}-${currentDay} 00:00:00`;
   const dateTo = `${currentYear}-${currentMonth + 1}-${currentDay} 23:59:59`;
 
   try {
+    const active_traders = await getActiveTraders(dateFrom, dateTo);
+
     // Request commission data for the previous month
     const markup = await api.basic.send({
       app_markup_statistics: 1,
@@ -78,7 +101,9 @@ export const getTodaysCommission = async () => {
       date_to: dateTo,
     });
 
-    return markup.app_markup_statistics.total_app_markup_usd;
+    const total_mk = markup.app_markup_statistics.total_app_markup_usd;
+
+    return { total_mk, active_traders };
   } catch (error) {
     console.log(error);
   }
@@ -159,16 +184,21 @@ export const customDateCommissionCheck = async () => {
       ? true
       : false;
   try {
+    const date_from = `${dateTimeSlider.from} 00:00:00`;
+    const date_to = is_single_date
+      ? `${dateTimeSlider.from} 23:59:59`
+      : `${dateTimeSlider.to} 23:59:59`;
+    const active_traders = await getActiveTraders(date_from, date_to);
     // Request commission data for the previous month
     const markup = await api.basic.send({
       app_markup_statistics: 1,
-      date_from: `${dateTimeSlider.from} 00:00:00`,
-      date_to: is_single_date
-        ? `${dateTimeSlider.from} 23:59:59`
-        : `${dateTimeSlider.to} 23:59:59`,
+      date_from: date_from,
+      date_to: date_to,
     });
 
-    return markup.app_markup_statistics.total_app_markup_usd;
+    const total_mk = markup.app_markup_statistics.total_app_markup_usd;
+
+    return { total_mk, active_traders };
   } catch (error) {
     console.log(error);
   }

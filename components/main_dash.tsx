@@ -23,8 +23,10 @@ function Dashboard() {
     payment_status: "pending",
   });
   const [todaysCommission, setTodaysCommission] = useState(0);
+  const [todaysActiveTraders, setTodayActiveTraders] = useState(0);
   const [thisMonthCommissions, setThisMonthCommissions] = useState(0);
   const [customDateComissions, setCustomDateComissions] = useState(0);
+  const [customDateActiveTraders, setCustomDateActiveTraders] = useState(0);
   const [isCheckedClicked, setIsCheckedClicked] = useState(false);
   const isMobile = window.innerWidth <= 780;
 
@@ -50,7 +52,8 @@ function Dashboard() {
           setTodaysCommission(-1);
           return;
         }
-        setTodaysCommission(commission);
+        setTodaysCommission(commission.total_mk);
+        setTodayActiveTraders(commission.active_traders);
       });
       getThisMonthCommissions().then((commission) => {
         if (typeof commission === "undefined") {
@@ -66,7 +69,8 @@ function Dashboard() {
     setIsCheckedClicked(true);
     authorizeAPI().then(async () => {
       customDateCommissionCheck().then((commission) => {
-        setCustomDateComissions(commission);
+        setCustomDateComissions(commission!.total_mk);
+        setCustomDateActiveTraders(commission!.active_traders);
       });
     });
   };
@@ -191,6 +195,12 @@ function Dashboard() {
                         `$ ${todaysCommission.toFixed(2)}`
                       )}
                     </div>
+
+                    {todaysActiveTraders > 0 && (
+                      <p className="text-xs text-muted-foreground">
+                        active traders: {todaysActiveTraders}
+                      </p>
+                    )}
                   </CardContent>
                 </Card>
                 <Card>
@@ -277,6 +287,12 @@ function Dashboard() {
                           `$ ${customDateComissions.toFixed(2)}`
                         )}
                       </div>
+
+                      {customDateActiveTraders > 0 && (
+                        <p className="text-xs text-muted-foreground">
+                          active traders: {customDateActiveTraders}
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
