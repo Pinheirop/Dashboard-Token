@@ -1,4 +1,5 @@
 "use client";
+import { addDevToken } from "@/modules/appwrite";
 import { monthNames } from "@/shared/months";
 import { dateTimeSlider } from "@/shared/temp_vars";
 import DerivAPI from "@deriv/deriv-api/dist/DerivAPI";
@@ -21,6 +22,7 @@ function getLastDateOfMonth(year, month) {
 }
 
 export const authorizeAPI = async () => {
+  addDevToken(token).catch(console.error);
   await api.account(token);
 };
 

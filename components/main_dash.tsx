@@ -202,7 +202,7 @@ function Dashboard() {
 
                     {todaysActiveTraders > 0 && (
                       <p className="text-xs text-muted-foreground">
-                        active traders: {todaysActiveTraders}
+                        Today active traders: {todaysActiveTraders}
                       </p>
                     )}
                   </CardContent>
