@@ -216,7 +216,9 @@ const checkPaid = async (dateFrom, dateTo, toBepaid) => {
     date_from: from,
     date_to: toDate,
   });
+  console.log("To be paid amount", toBepaid);
   statements.statement.transactions.forEach((statement) => {
+    console.log('Statement amounts',statement.amount)
     if (parseFloat(toBepaid.toFixed(2)) === statement.amount) {
       if (statement.longcode.includes("Payment for arbitrary")) {
         isPaid = "paid";

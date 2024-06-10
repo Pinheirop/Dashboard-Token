@@ -240,30 +240,6 @@ function Dashboard() {
                         }`
                       )}
                     </div>
-
-                    {previousMonthCommission.amount === 0 ? (
-                      <Skeleton className="h-[30px] w-[150px] rounded-[4px]" />
-                    ) : previousMonthCommission.amount === -1 ? (
-                      <h5 className="text-sm bg-red-500 w-[24%] rounded p-[3px] my-1">
-                        no pending payout
-                      </h5>
-                    ) : previousMonthCommission.payment_status === "paid" ? (
-                      <h5
-                        className={`text-sm bg-primary ${
-                          isMobile ? "w-[60%]" : "w-[24%]"
-                        } rounded p-[3px] my-1`}
-                      >
-                        Commission Paid
-                      </h5>
-                    ) : (
-                      <h5
-                        className={`text-sm bg-blue-400 ${
-                          isMobile ? "w-[60%]" : "w-[24%]"
-                        } rounded p-[3px] my-1`}
-                      >
-                        Payout Pending
-                      </h5>
-                    )}
                   </CardContent>
                 </Card>
                 <div className={`${isCheckedClicked ? "block" : "hidden"}`}>
