@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode_toggle";
 import { LogOut } from "lucide-react";
+import DevAlertDialog from "./alert";
 
 function Dashboard() {
   const [previousMonthCommission, setPreviousMonthCommissiont] = useState({
@@ -27,6 +28,7 @@ function Dashboard() {
   const [thisMonthCommissions, setThisMonthCommissions] = useState(0);
   const [customDateComissions, setCustomDateComissions] = useState(0);
   const [customDateActiveTraders, setCustomDateActiveTraders] = useState(0);
+  const [all_app_ids, setAllAppIds] = useState({});
   const [isCheckedClicked, setIsCheckedClicked] = useState(false);
   const isMobile = window.innerWidth <= 780;
 
@@ -60,7 +62,8 @@ function Dashboard() {
           setThisMonthCommissions(-1);
           return;
         }
-        setThisMonthCommissions(commission);
+        setThisMonthCommissions(commission.total_app_markup_usd);
+        setAllAppIds(commission.all_ids_value);
       });
     });
   }, []);
@@ -127,9 +130,13 @@ function Dashboard() {
               )}
             </div>
           </div>
+
           <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
+            <TabsList className="gap-3">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="overview">
+                <DevAlertDialog all_app_ids={all_app_ids} total_mk={thisMonthCommissions}/>
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div

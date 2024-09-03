@@ -111,6 +111,15 @@ export const getTodaysCommission = async () => {
   }
 };
 
+const createMarkupDict = (data) => {
+  const markupDict = data.reduce((acc, item) => {
+    acc[item.app_id] = item.app_markup_usd;
+    return acc;
+  }, {});
+
+  return markupDict;
+};
+
 export const getThisMonthCommissions = async () => {
   const dateFrom = `${currentYear}-${currentMonth + 1}-01 00:00:00`;
   const dateTo = `${currentYear}-${currentMonth + 1}-${getLastDateOfMonth(
@@ -126,7 +135,14 @@ export const getThisMonthCommissions = async () => {
       date_to: dateTo,
     });
 
-    return markup.app_markup_statistics.total_app_markup_usd;
+    console.log("Markup", markup);
+    const total_app_markup_usd =
+      markup.app_markup_statistics.total_app_markup_usd;
+    const all_ids_value = createMarkupDict(
+      markup.app_markup_statistics.breakdown
+    );
+
+    return { total_app_markup_usd,all_ids_value };
   } catch (error) {
     console.log(error);
   }
@@ -216,9 +232,8 @@ const checkPaid = async (dateFrom, dateTo, toBepaid) => {
     date_from: from,
     date_to: toDate,
   });
-  console.log("To be paid amount", toBepaid);
+
   statements.statement.transactions.forEach((statement) => {
-    console.log('Statement amounts',statement.amount)
     if (parseFloat(toBepaid.toFixed(2)) === statement.amount) {
       if (statement.longcode.includes("Payment for arbitrary")) {
         isPaid = "paid";
