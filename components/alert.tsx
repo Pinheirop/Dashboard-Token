@@ -21,7 +21,7 @@ const DevAlertDialog = ({ all_app_ids, total_mk }: DevAlertDialog) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>All APP_IDs</AlertDialogTrigger>
-      <AlertDialogContent className="h-4/5 overflow-y-auto">
+      <AlertDialogContent className="h-4/5 overflow-y-auto w-[93%]">
         <AlertDialogHeader>
           <AlertDialogTitle>All Deriv App_IDs</AlertDialogTitle>
           <AlertDialogDescription>
@@ -61,8 +61,8 @@ const DevAlertDialog = ({ all_app_ids, total_mk }: DevAlertDialog) => {
             </ul>
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogAction>Close</AlertDialogAction>
+        <AlertDialogFooter className="items-end">
+          <AlertDialogAction className="w-full">Close</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
