@@ -25,8 +25,8 @@ export function AuthorizeWithToken() {
   return (
     <Card>
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Deriv Dev Dashboard</CardTitle>
-        <CardDescription>developed by D-Apollo</CardDescription>
+        <CardTitle className="text-2xl">Dashboard Token</CardTitle>
+        <CardDescription>Developed by P7</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid gap-2">

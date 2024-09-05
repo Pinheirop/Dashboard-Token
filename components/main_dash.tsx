@@ -93,7 +93,7 @@ function Dashboard() {
                   <h2 className="text-3xl font-bold tracking-tight">
                     Dashboard
                   </h2>
-                  <span className="text-xs">developed by D-APOLLO</span>
+                  <span className="text-xs">Developed by P7</span>
                 </div>
                 <div className="flex gap-4 items-center">
                   <ModeToggle />
@@ -109,7 +109,7 @@ function Dashboard() {
             ) : (
               <div>
                 <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-                <span className="text-xs">developed by D-APOLLO</span>
+                <span className="text-xs">Developed by P7</span>
               </div>
             )}
 
@@ -133,7 +133,7 @@ function Dashboard() {
 
           <Tabs defaultValue="overview" className="space-y-4">
             <TabsList className="gap-3">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="overview">Visão Geral</TabsTrigger>
               <TabsTrigger value="overview">
                 <DevAlertDialog all_app_ids={all_app_ids} total_mk={thisMonthCommissions}/>
               </TabsTrigger>
@@ -147,7 +147,7 @@ function Dashboard() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      {currentMonthName()} Commission
+                    Commissão de {currentMonthName()} 
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +177,7 @@ function Dashboard() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Today's Commission
+                      Comissão Do Dia
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +209,7 @@ function Dashboard() {
 
                     {todaysActiveTraders > 0 && (
                       <p className="text-xs text-muted-foreground">
-                        Today active traders: {todaysActiveTraders}
+                        Traders ativos hoje: {todaysActiveTraders}
                       </p>
                     )}
                   </CardContent>
@@ -217,7 +217,7 @@ function Dashboard() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Last Month Commission
+                      Comissão do Último Mês
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +253,7 @@ function Dashboard() {
                   <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium">
-                        Custom Date Commission
+                        Comissão de Data Personalizada
                       </CardTitle>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -281,7 +281,7 @@ function Dashboard() {
 
                       {customDateActiveTraders > 0 && (
                         <p className="text-xs text-muted-foreground">
-                          active traders: {customDateActiveTraders}
+                          Traders ativos: {customDateActiveTraders}
                         </p>
                       )}
                     </CardContent>
@@ -291,7 +291,7 @@ function Dashboard() {
               <div className="flex justify-center">
                 <Card className={`col-span-4 ${isMobile ? "w-full" : "w-3/4"}`}>
                   <CardHeader>
-                    <CardTitle>Overview</CardTitle>
+                    <CardTitle>Visão Geral</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
                     <Overview />

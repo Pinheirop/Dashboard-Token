@@ -20,10 +20,10 @@ interface DevAlertDialog {
 const DevAlertDialog = ({ all_app_ids, total_mk }: DevAlertDialog) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>All APP_IDs</AlertDialogTrigger>
+      <AlertDialogTrigger>Todos os APP_IDs</AlertDialogTrigger>
       <AlertDialogContent className="h-4/5 overflow-y-auto w-[93%]">
         <AlertDialogHeader>
-          <AlertDialogTitle>All Deriv App_IDs</AlertDialogTitle>
+          <AlertDialogTitle>Todos os App_IDs</AlertDialogTitle>
           <AlertDialogDescription>
             <ul className="space-y-4">
               {Object.entries(all_app_ids).map(([appId, markup]) => {
@@ -51,7 +51,7 @@ const DevAlertDialog = ({ all_app_ids, total_mk }: DevAlertDialog) => {
                       <CardContent className="flex flex-col space-y-2">
                         <div className="text-xl font-bold">$ {markup.toFixed(2)}</div>
                         <div className="text-sm text-custom-green">
-                          {percentage.toFixed(2)}% of Total
+                          {percentage.toFixed(2)}% do Total
                         </div>
                       </CardContent>
                     </Card>
@@ -62,7 +62,7 @@ const DevAlertDialog = ({ all_app_ids, total_mk }: DevAlertDialog) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="items-end">
-          <AlertDialogAction className="w-full">Close</AlertDialogAction>
+          <AlertDialogAction className="w-full">Fechar</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
