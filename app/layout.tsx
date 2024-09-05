@@ -7,8 +7,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dev - D-Apollo",
-  description: "Track you deriv markup commission and get more insights",
+  title: "Dashboard Token",
+  description: "Dashboard de Token",
 };
 
 export default function RootLayout({
