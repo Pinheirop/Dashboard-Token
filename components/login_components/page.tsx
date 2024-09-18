@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { loginUser } from "@/utils/ws_functions";
 import { Button } from "../ui/button";
 import {
@@ -12,15 +13,26 @@ import {
 } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useState } from "react";
 
 export function AuthorizeWithToken() {
   const [token, setToken] = useState("");
-  const handleChange = (event: any) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setToken(event.target.value);
   };
-  
 
+  const handleLogin = async () => {
+    try {
+      setError(null); // Limpa o erro anterior
+      await loginUser(token);
+      // Redirecionar ou atualizar UI em caso de sucesso
+      // Por exemplo: window.location.href = '/dashboard';
+    } catch (error: any) {
+      // Define a mensagem de erro no estado
+      setError(error.message || "Erro desconhecido ao fazer login.");
+    }
+  };
 
   return (
     <Card>
@@ -33,9 +45,10 @@ export function AuthorizeWithToken() {
           <Label htmlFor="token">Token</Label>
           <Input id="token" type="text" value={token} onChange={handleChange} />
         </div>
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={() => loginUser(token)}>
+        <Button className="w-full" onClick={handleLogin}>
           Login
         </Button>
       </CardFooter>

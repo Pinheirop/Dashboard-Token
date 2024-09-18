@@ -33,7 +33,7 @@ export const loginUser = async (token) => {
     localStorage.setItem("user_token", token.trim());
     location.reload();
   } catch (error) {
-    console.log("An error occured while logging in", error);
+    throw new Error(error.message || "Token inválido. Por favor, verifique e tente novamente.");
   }
 };
 
